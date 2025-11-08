@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Filesystem;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -11,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.swerve.Swerve;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,6 +25,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Intake intakeSubsystem = new Intake();
+  private final Swerve driveSubsystem = new Swerve(Filesystem.getDeployDirectory());
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -31,6 +35,20 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+  }
+
+
+  public void setDefaultCommands() {
+    driveSubsystem.setDefaultCommand(
+            driveSubsystem.driveFieldOriented(
+                    () ->
+                      new ChassisSpeeds(
+                              Constants.Swerve.MAX_VEL * m_driverController.getLeftX(),
+                              Constants.Swerve.MAX_VEL * m_driverController.getLeftY(),
+                              Constants.Swerve.MAX_OMEGA * m_driverController.getRightX()
+                      )
+            )
+    );
   }
 
 

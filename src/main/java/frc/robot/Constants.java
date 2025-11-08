@@ -24,7 +24,8 @@ public final class Constants {
 
 
   public static final class Swerve {
-    public static final double MAX_VELOCITY = 4.0;
+    public static final double MAX_VEL = 4.0;
+    public static final double MAX_OMEGA = 6.0; // uh todo calc this later
   }
 
   public static class INTAKE_CONSTANTS {

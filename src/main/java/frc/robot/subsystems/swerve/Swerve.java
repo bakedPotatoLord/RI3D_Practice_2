@@ -37,7 +37,6 @@ import frc.robot.Constants;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
@@ -85,7 +84,7 @@ public class Swerve extends SubsystemBase
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
         try
         {
-            swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.Swerve.MAX_VELOCITY, startingPose);
+            swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.Swerve.MAX_VEL, startingPose);
             // Alternative method if you don't want to supply the conversion factor via JSON files.
             // swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed, angleConversionFactor, driveConversionFactor);
         } catch (Exception e)
@@ -114,7 +113,7 @@ public class Swerve extends SubsystemBase
     {
         swerveDrive = new SwerveDrive(driveCfg,
                 controllerCfg,
-                Constants.Swerve.MAX_VELOCITY,
+                Constants.Swerve.MAX_VEL,
                 new Pose2d(new Translation2d(Meter.of(2), Meter.of(0)),
                         Rotation2d.fromDegrees(0)));
     }
@@ -594,7 +593,7 @@ public class Swerve extends SubsystemBase
                 headingX,
                 headingY,
                 getHeading().getRadians(),
-                Constants.Swerve.MAX_VELOCITY);
+                Constants.Swerve.MAX_VEL);
     }
 
     /**
@@ -614,7 +613,7 @@ public class Swerve extends SubsystemBase
                 scaledInputs.getY(),
                 angle.getRadians(),
                 getHeading().getRadians(),
-                Constants.Swerve.MAX_VELOCITY);
+                Constants.Swerve.MAX_VEL);
     }
 
     /**
