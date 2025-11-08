@@ -15,17 +15,12 @@ public class Intake extends SubsystemBase {
     SparkMax intake_4bar = new SparkMax(INTAKE_CONSTANTS.INTAKE_4BAR_CAN_ID,MotorType.kBrushless);
     SparkMax intake_manipulator = new SparkMax(INTAKE_CONSTANTS.INTAKE_MANIPULATOR_CAN_ID, MotorType.kBrushless);
 
-    SparkClosedLoopController controller_4bar;
-    SparkClosedLoopController controller_manipulator;
+    SparkClosedLoopController controller_4bar = intake_4bar.getClosedLoopController();
+    SparkClosedLoopController controller_manipulator = intake_manipulator.getClosedLoopController();
 
     boolean setPointDown = false;
 
-    public Intake() {
-
-        controller_4bar = intake_4bar.getClosedLoopController();
-        controller_manipulator = intake_manipulator.getClosedLoopController();
-    
-    }
+    public Intake() {}
 
     void intakeOut(){
         setPointDown = true;
