@@ -22,6 +22,11 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
 
+
+  public static final class Swerve {
+    public static final double MAX_VELOCITY = 4.0;
+  }
+
   public static class INTAKE_CONSTANTS {
     public static final int INTAKE_4BAR_CAN_ID = 4;
     public static final int INTAKE_MANIPULATOR_CAN_ID = 5;
@@ -30,7 +35,7 @@ public final class Constants {
     public static class  FOUR_BAR {
       public static final double SETPOINT_UP= 0;
       public static final double SETPOINT_DOWN = 1.8;
-    
+
       public static final SparkBaseConfig config = new SparkMaxConfig();
 
       static{
