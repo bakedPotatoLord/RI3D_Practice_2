@@ -18,6 +18,7 @@ public class Intake extends SubsystemBase {
     SparkClosedLoopController controller_4bar;
     SparkClosedLoopController controller_manipulator;
 
+    boolean setPointDown = false;
 
     public Intake() {
 
@@ -27,27 +28,42 @@ public class Intake extends SubsystemBase {
     }
 
     void intakeOut(){
+        setPointDown = true;
         controller_4bar.setReference(INTAKE_CONSTANTS.FOUR_BAR.SETPOINT_DOWN, ControlType.kPosition);
     }
 
     void intakeIn(){
+        setPointDown = false;
         controller_4bar.setReference(INTAKE_CONSTANTS.FOUR_BAR.SETPOINT_UP, ControlType.kPosition);
     }
 
     void intake4BarStop(){
         intake_4bar.stopMotor();
     }
+    
+    void intakeToggle(){
+        setPointDown = !setPointDown;
 
-    Command intakeOutCommand(){
+        controller_4bar.setReference(
+            setPointDown ?  INTAKE_CONSTANTS.FOUR_BAR.SETPOINT_DOWN : INTAKE_CONSTANTS.FOUR_BAR.SETPOINT_UP,
+            ControlType.kPosition
+        );
+    }
+
+    public Command intakeOutCommand(){
         return runOnce(this::intakeOut);
     }
 
-    Command intakeInCommand(){
+    public Command intakeInCommand(){
         return runOnce(this::intakeIn);
     }
 
-    Command intake4BarStopCommand(){
+    public Command intake4BarStopCommand(){
         return runOnce(this::intake4BarStop);
+    }
+
+    public Command intakeToggleCommand(){
+        return runOnce(this::intakeToggle);
     }
 
     void intakeManipulatorRun(){
@@ -62,15 +78,15 @@ public class Intake extends SubsystemBase {
         intake_manipulator.stopMotor();
     }
 
-    Command intakeManipulatorRunCommand(){
+    public Command intakeManipulatorRunCommand(){
         return runOnce(this::intakeManipulatorRun);
     }
 
-    Command intakeManipulatorRunReverseCommand(){
+    public Command intakeManipulatorRunReverseCommand(){
         return runOnce(this::intakeManipulatorRunReverse);
     }
 
-    Command intakeManipulatorStopCommand(){
+    public Command intakeManipulatorStopCommand(){
         return runOnce(this::intakeManipulatorStop);
     }
 }
