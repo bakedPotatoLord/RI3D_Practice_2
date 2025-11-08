@@ -9,14 +9,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
+
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
@@ -71,5 +64,50 @@ public final class Constants {
         .outputRange(-1, 1);
       }
     }
+  }
+
+  public static class ElevatorConstants{
+
+    // first is main, second is follower
+    public static final int[] ELEVATOR_CAN_ID = {5,6};
+    public static final boolean[] INVERTED = {false,true};
+
+    public static final int CURRENT_LIMIT = 50;
+
+    public static final SparkBaseConfig mainConfig = new SparkMaxConfig();
+    public static final SparkBaseConfig followerConfig = new SparkMaxConfig();
+
+    public static final int LIMIT_SWITCH_DIO_PORT = 0;
+
+    public static final double SETPOINT_BASE = 0,
+      SETPOINT_L1 = 0.5,
+      SETPOINT_L2 = 1.5,
+      SETPOINT_L3 = 2.5,
+      SETPOINT_L4 = 3.5;
+
+    public static final double ELEVATOR_ZERO_SPEED = -0.2;
+
+    public enum ELEVATOR_STATE{
+      BASE,
+      L1,
+      L2,
+      L3,
+      L4
+    }
+
+    static{
+      mainConfig.idleMode(IdleMode.kBrake)
+      .inverted(INVERTED[0])
+      .smartCurrentLimit(CURRENT_LIMIT);
+      mainConfig.closedLoop.pidf(0.2, 0, 0, 1)
+      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+      .outputRange(-1, 1);
+
+      followerConfig.idleMode(IdleMode.kBrake)
+      .inverted(INVERTED[1])
+      .smartCurrentLimit(CURRENT_LIMIT)
+      .follow(ELEVATOR_CAN_ID[0]);
+    }
+
   }
 }
