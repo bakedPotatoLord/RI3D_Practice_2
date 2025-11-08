@@ -5,9 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.*;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -31,6 +30,16 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
   }
+
+
+  //intake, neo for 4-bar, and neo for wheels
+  
+  //hopper is a singluar neo
+
+  //ElevatorFeedforward neo on each side
+
+  //manipulator - 1 neo
+
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
