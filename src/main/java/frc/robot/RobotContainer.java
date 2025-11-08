@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.Constants.ElevatorConstants.ELEVATOR_STATE;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,6 +21,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final Intake intakeSubsystem = new Intake();
+  private final Elevator elevator = new Elevator();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -34,9 +36,9 @@ public class RobotContainer {
 
   //intake, neo for 4-bar, and neo for wheels
   
-  //hopper is a singluar neo
+  //hopper- 1 neo
 
-  //ElevatorFeedforward neo on each side
+  //Elevator- 2 neos , 1 reversed
 
   //manipulator - 1 neo
 
@@ -48,6 +50,10 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.b().onTrue(intakeSubsystem.intakeOutCommand());
     m_driverController.a().onTrue(intakeSubsystem.intakeToggleCommand());
+
+    m_driverController.x().onTrue(elevator.zeroElevator());
+    m_driverController.leftBumper().onTrue(elevator.goToSetpointCommand(ELEVATOR_STATE.BASE));
+    m_driverController.rightBumper().onTrue(elevator.goToSetpointCommand(ELEVATOR_STATE.L1));
 
   }
 

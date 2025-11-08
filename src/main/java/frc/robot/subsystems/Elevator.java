@@ -65,11 +65,11 @@ public class Elevator extends SubsystemBase {
         return limitSwitch.get();
     }
 
-    Command goToSetpointCommand(ELEVATOR_STATE state){
+    public Command goToSetpointCommand(ELEVATOR_STATE state){
         return runOnce(() -> goToSetpoint(state));
     }
 
-    Command zeroElevator(){
+    public Command zeroElevator(){
         return Commands.run(()->runElevator(ElevatorConstants.ELEVATOR_ZERO_SPEED),this).until(this::getLimitSwitch).andThen(zeroElevator());
     }
     
